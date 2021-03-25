@@ -93,7 +93,7 @@ class TvShowsFragment : Fragment() {
     )
 
     private fun navigateToDetailsFragment(id: Int){
-        MoviesFragmentDirections.movieDetails(id).also {
+        TvShowsFragmentDirections.actionTvShowsFragmentToDetailsTvFragment(id).also {
             findNavController().navigate(it.actionId, it.arguments)
         }
     }

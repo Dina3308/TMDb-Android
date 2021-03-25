@@ -94,7 +94,7 @@ class MoviesFragment : Fragment() {
     )
 
     private fun navigateToDetailsFragment(id: Int){
-        MoviesFragmentDirections.movieDetails(id).also {
+        MoviesFragmentDirections.actionMoviesFragmentToDetailsMovieFragment(id).also {
             findNavController().navigate(it.actionId, it.arguments)
         }
     }

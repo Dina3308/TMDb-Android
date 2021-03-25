@@ -10,8 +10,8 @@
         android:name="ru.kpfu.itis.tmdb.presentation.movies.MoviesFragment"
         android:label="MoviesFragment" >
         <action
-            android:id="@+id/movieDetails"
-            app:destination="@+id/detailsFragment"/>
+            android:id="@+id/action_moviesFragment_to_detailsMovieFragment"
+            app:destination="@id/detailsMovieFragment" />
     </fragment>
 
     <fragment
@@ -19,8 +19,8 @@
         android:name="ru.kpfu.itis.tmdb.presentation.search.SearchFragment"
         android:label="SearchFragment" >
         <action
-            android:id="@+id/multiDetails"
-            app:destination="@+id/detailsFragment"/>
+            android:id="@+id/action_searchFragment_to_detailsMovieFragment"
+            app:destination="@id/detailsMovieFragment" />
     </fragment>
 
     <fragment
@@ -28,18 +28,26 @@
         android:name="ru.kpfu.itis.tmdb.presentation.tv_shows.TvShowsFragment"
         android:label="TvShowsFragment" >
         <action
-            android:id="@+id/tvShowDetails"
-            app:destination="@+id/detailsFragment"/>
+            android:id="@+id/action_tvShowsFragment_to_detailsTvFragment"
+            app:destination="@id/detailsTvFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailsMovieFragment"
+        android:name="ru.kpfu.itis.tmdb.presentation.details.movie.DetailsMovieFragment"
+        android:label="DetailsMovieFragment" >
+        <argument
+            android:name="item_id"
+            app:argType="integer"
+            android:defaultValue="-1"/>
+    </fragment>
+    <fragment
+        android:id="@+id/detailsTvFragment"
+        android:name="ru.kpfu.itis.tmdb.presentation.details.tv.DetailsTvFragment"
+        android:label="DetailsTvFragment" >
+        <argument
+            android:name="item_id"
+            app:argType="integer"
+            android:defaultValue="-1"/>
     </fragment>
 
-    <fragment
-        android:id="@+id/detailsFragment"
-        android:name="ru.kpfu.itis.tmdb.presentation.details.DetailsFragment"
-        android:label="fragment_details"
-        tools:layout="@layout/fragment_details" >
-        <argument
-            android:name="itemId"
-            app:argType="integer"
-            android:defaultValue="0"/>
-    </fragment>
 </navigation>

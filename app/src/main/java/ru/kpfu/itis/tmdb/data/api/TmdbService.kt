@@ -44,8 +44,12 @@ interface TmdbService {
     ): MovieResponse
 
     @GET("movie/{movie_id}")
-    suspend fun getDetails(
+    suspend fun getDetailsMovie(
         @Path("movie_id") movie_id: Int,
-        @Query("region") region: String
+    ): DetailsResponse
+
+    @GET("tv/{tv_id}")
+    suspend fun getDetailsTv(
+        @Path("tv_id") tv_id: Int,
     ): DetailsResponse
 }
