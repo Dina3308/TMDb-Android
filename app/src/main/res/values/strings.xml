@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">tmdb</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="movies">Movies</string>
+    <string name="tv_shows">Tv Shows</string>
+    <string name="search">Search</string>
+    <string name="popular_movies">Popular</string>
+    <string name="playing_in_theatres">Playing In Theatres</string>
+    <string name="top_rated">Top Rated</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="search_nav">Search movies, tv shows</string>
+    <string name="release">Дата выпуска:  %s</string>
+    <string name="genre">Жанр:  %s</string>
+
 </resources>
