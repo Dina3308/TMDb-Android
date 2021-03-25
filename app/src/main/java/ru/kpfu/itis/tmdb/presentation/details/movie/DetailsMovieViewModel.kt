@@ -7,25 +7,26 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import ru.kpfu.itis.tmdb.data.api.TmdbService
 import ru.kpfu.itis.tmdb.data.api.response.DetailsResponse
+import ru.kpfu.itis.tmdb.presentation.details.BaseViewModel
 import java.io.IOException
 
-class DetailsMovieViewModel(
+open class DetailsMovieViewModel(
    private val tmdbService: TmdbService
-) : ViewModel() {
+) : BaseViewModel() {
 
     private val progress: MutableLiveData<Boolean> = MutableLiveData()
-    private val detailsMovie: MutableLiveData<Result<DetailsResponse>> = MutableLiveData()
+    private val details: MutableLiveData<Result<DetailsResponse>> = MutableLiveData()
 
-    fun progress(): LiveData<Boolean> = progress
-    fun detailsMovie(): MutableLiveData<Result<DetailsResponse>> = detailsMovie
+    override fun progress(): LiveData<Boolean> = progress
+    override fun details(): MutableLiveData<Result<DetailsResponse>> = details
 
-    fun showDetailsMovie(id: Int){
+    override fun showDetails(id: Int){
         viewModelScope.launch () {
             try {
                 progress.value = true
-                detailsMovie.value = Result.success(tmdbService.getDetailsMovie(id))
+                details.value = Result.success(tmdbService.getDetailsMovie(id))
             } catch (ex: IOException) {
-                detailsMovie.value = Result.failure(ex)
+                details.value = Result.failure(ex)
             }finally {
                 progress.value = false
             }

@@ -26,7 +26,7 @@ class DetailsMovieFragment : Fragment() {
     ): View? {
         binding =  DataBindingUtil.inflate(inflater, R.layout.fragment_details, container, false)
         viewModel = ViewModelProvider(this, initFactory()).get(DetailsMovieViewModel::class.java)
-        arguments?.let { DetailsMovieFragmentArgs.fromBundle(it).itemId }?.let { viewModel.showDetailsMovie(it) }
+        arguments?.let { DetailsMovieFragmentArgs.fromBundle(it).itemId }?.let { viewModel.showDetails(it) }
         initSubscribes()
         return binding.root
     }
@@ -40,7 +40,7 @@ class DetailsMovieFragment : Fragment() {
             progress().observe(viewLifecycleOwner, {
                 binding.progressBar.isVisible = it
             })
-            detailsMovie().observe(viewLifecycleOwner, {
+            details().observe(viewLifecycleOwner, {
                 try {
                     binding.details = it.getOrThrow()
                     binding.genres =  it.getOrThrow().genres.joinToString {results ->

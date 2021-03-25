@@ -1,7 +1,6 @@
 package ru.kpfu.itis.tmdb.presentation.search
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
@@ -15,7 +14,6 @@ import ru.kpfu.itis.tmdb.R
 import ru.kpfu.itis.tmdb.data.api.ApiFactory
 import ru.kpfu.itis.tmdb.databinding.FragmentSearchBinding
 import ru.kpfu.itis.tmdb.presentation.ViewModelFactory
-import ru.kpfu.itis.tmdb.presentation.movies.MoviesFragmentDirections
 import ru.kpfu.itis.tmdb.presentation.rv.search.SearchAdapter
 import java.io.IOException
 
@@ -70,7 +68,7 @@ class SearchFragment : Fragment() {
             multiSearch().observe(viewLifecycleOwner, {results ->
                 try {
                     val adapter = SearchAdapter(results.getOrThrow()){
-                        navigateToDetailsFragment(it.id)
+                        navigateToDetailsFragment(it.id, it.type)
                     }
                     binding.searchRv.adapter = adapter
                     adapter.submitList(results.getOrThrow())
@@ -90,8 +88,8 @@ class SearchFragment : Fragment() {
             ApiFactory.tmdbService
     )
 
-    private fun navigateToDetailsFragment(id: Int){
-        SearchFragmentDirections.actionSearchFragmentToDetailsMovieFragment(id).also {
+    private fun navigateToDetailsFragment(id: Int, type: String){
+        SearchFragmentDirections.actionSearchFragmentToDetailsMultiFragment(id, type).also {
             findNavController().navigate(it.actionId, it.arguments)
         }
     }

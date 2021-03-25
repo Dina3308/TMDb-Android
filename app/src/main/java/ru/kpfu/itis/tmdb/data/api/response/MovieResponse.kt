@@ -18,5 +18,7 @@ data class Results (
     @SerializedName("title")
     val title : String,
     @SerializedName("name")
-    val name : String
+    val name : String,
+    @SerializedName("media_type")
+    val type: String
 )

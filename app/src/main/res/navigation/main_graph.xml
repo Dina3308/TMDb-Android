@@ -19,8 +19,8 @@
         android:name="ru.kpfu.itis.tmdb.presentation.search.SearchFragment"
         android:label="SearchFragment" >
         <action
-            android:id="@+id/action_searchFragment_to_detailsMovieFragment"
-            app:destination="@id/detailsMovieFragment" />
+            android:id="@+id/action_searchFragment_to_detailsMultiFragment"
+            app:destination="@id/detailsMultiFragment" />
     </fragment>
 
     <fragment
@@ -48,6 +48,19 @@
             android:name="item_id"
             app:argType="integer"
             android:defaultValue="-1"/>
+    </fragment>
+    <fragment
+        android:id="@+id/detailsMultiFragment"
+        android:name="ru.kpfu.itis.tmdb.presentation.multi.DetailsMultiFragment"
+        android:label="DetailsMultiFragment" >
+        <argument
+            android:name="item_id"
+            app:argType="integer"
+            android:defaultValue="-1"/>
+        <argument
+            android:name="type"
+            app:argType="string"
+            android:defaultValue="null"/>
     </fragment>
 
 </navigation>

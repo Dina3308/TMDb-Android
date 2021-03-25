@@ -24,7 +24,9 @@ data class DetailsResponse(
     @SerializedName("runtime")
     var runtime: Int,
     @SerializedName("title")
-    var title: String
+    var title: String,
+    @SerializedName("first_air_date")
+    var firstAirDate: String
 )
 
 data class Genre(

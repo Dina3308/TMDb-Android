@@ -89,7 +89,7 @@
                     android:layout_marginEnd="16dp"
                     android:textColor="@color/white"
                     android:textSize="16sp"
-                    android:text="@{@string/release(details.releaseDate)}"
+                    android:text="@{details.releaseDate != null ? @string/release(details.releaseDate) :  @string/release(details.firstAirDate)}"
                     android:layout_marginTop="16dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/title_tv" />
