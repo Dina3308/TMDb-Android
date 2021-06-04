@@ -9,18 +9,19 @@ import ru.kpfu.itis.tmdb.data.api.TmdbService
 import ru.kpfu.itis.tmdb.data.api.response.DetailsResponse
 import ru.kpfu.itis.tmdb.presentation.details.BaseViewModel
 import java.io.IOException
+import javax.inject.Inject
 
-open class DetailsMovieViewModel(
+class DetailsMovieViewModel @Inject constructor(
    private val tmdbService: TmdbService
-) : BaseViewModel() {
+) : ViewModel() {
 
     private val progress: MutableLiveData<Boolean> = MutableLiveData()
     private val details: MutableLiveData<Result<DetailsResponse>> = MutableLiveData()
 
-    override fun progress(): LiveData<Boolean> = progress
-    override fun details(): MutableLiveData<Result<DetailsResponse>> = details
+    fun progress(): LiveData<Boolean> = progress
+    fun details(): MutableLiveData<Result<DetailsResponse>> = details
 
-    override fun showDetails(id: Int){
+    fun showDetails(id: Int){
         viewModelScope.launch () {
             try {
                 progress.value = true

@@ -11,8 +11,9 @@ import ru.kpfu.itis.tmdb.data.api.response.MovieResponse
 import ru.kpfu.itis.tmdb.data.api.response.Results
 import java.io.IOException
 import java.net.UnknownHostException
+import javax.inject.Inject
 
-class MoviesViewModel(
+class MoviesViewModel @Inject constructor(
     private val tmdbService: TmdbService
 ) : ViewModel() {
 

@@ -7,21 +7,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
+import ru.kpfu.itis.tmdb.App
 import ru.kpfu.itis.tmdb.R
-import ru.kpfu.itis.tmdb.data.api.ApiFactory
 import ru.kpfu.itis.tmdb.databinding.FragmentMoviesBinding
-import ru.kpfu.itis.tmdb.presentation.ViewModelFactory
 import ru.kpfu.itis.tmdb.presentation.rv.SpaceItemDecoration
 import ru.kpfu.itis.tmdb.presentation.rv.backdrop.BackDropAdapter
 import ru.kpfu.itis.tmdb.presentation.rv.poster.PosterAdapter
+import javax.inject.Inject
 
 class MoviesFragment : Fragment() {
 
     private lateinit var binding: FragmentMoviesBinding
+
+    @Inject
     lateinit var viewModel: MoviesViewModel
 
     override fun onCreateView(
@@ -30,7 +30,15 @@ class MoviesFragment : Fragment() {
     ): View? {
 
         binding =  DataBindingUtil.inflate(inflater, R.layout.fragment_movies, container, false)
-        viewModel = ViewModelProvider(this, initFactory()).get(MoviesViewModel::class.java)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        (activity?.application as App).appComponent.moviesComponentFactory()
+            .create(this)
+            .inject(this)
 
         with(binding){
             titleToolbar = "Movies"
@@ -39,7 +47,6 @@ class MoviesFragment : Fragment() {
         }
 
         initSubscribes()
-        return binding.root
     }
 
     private fun initSubscribes(){
@@ -88,10 +95,6 @@ class MoviesFragment : Fragment() {
         }
 
     }
-
-    private fun initFactory() = ViewModelFactory(
-        ApiFactory.tmdbService
-    )
 
     private fun navigateToDetailsFragment(id: Int){
         MoviesFragmentDirections.actionMoviesFragmentToDetailsMovieFragment(id).also {

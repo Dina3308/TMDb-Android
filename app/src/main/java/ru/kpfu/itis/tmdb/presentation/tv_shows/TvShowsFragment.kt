@@ -1,28 +1,27 @@
 package ru.kpfu.itis.tmdb.presentation.tv_shows
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
+import ru.kpfu.itis.tmdb.App
 import ru.kpfu.itis.tmdb.R
-import ru.kpfu.itis.tmdb.data.api.ApiFactory
 import ru.kpfu.itis.tmdb.databinding.FragmentMoviesBinding
-import ru.kpfu.itis.tmdb.presentation.ViewModelFactory
-import ru.kpfu.itis.tmdb.presentation.movies.MoviesFragmentDirections
 import ru.kpfu.itis.tmdb.presentation.rv.SpaceItemDecoration
 import ru.kpfu.itis.tmdb.presentation.rv.backdrop.BackDropAdapter
 import ru.kpfu.itis.tmdb.presentation.rv.poster.PosterAdapter
+import javax.inject.Inject
 
 class TvShowsFragment : Fragment() {
 
     private lateinit var binding: FragmentMoviesBinding
+
+    @Inject
     lateinit var viewModel: TvShowsViewModel
 
     override fun onCreateView(
@@ -30,7 +29,15 @@ class TvShowsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding =  DataBindingUtil.inflate(inflater, R.layout.fragment_movies, container, false)
-        viewModel = ViewModelProvider(this, initFactory()).get(TvShowsViewModel::class.java)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        (activity?.application as App).appComponent.tvShowsComponentFactory()
+            .create(this)
+            .inject(this)
 
         with(binding){
             titleToolbar = "Tv Shows"
@@ -39,7 +46,6 @@ class TvShowsFragment : Fragment() {
         }
 
         initSubscribes()
-        return binding.root
     }
 
     private fun initSubscribes(){
@@ -87,10 +93,6 @@ class TvShowsFragment : Fragment() {
             })
         }
     }
-
-    private fun initFactory() = ViewModelFactory(
-        ApiFactory.tmdbService
-    )
 
     private fun navigateToDetailsFragment(id: Int){
         TvShowsFragmentDirections.actionTvShowsFragmentToDetailsTvFragment(id).also {
