@@ -7,18 +7,18 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
+import ru.kpfu.itis.tmdb.App
 import ru.kpfu.itis.tmdb.R
-import ru.kpfu.itis.tmdb.data.api.ApiFactory
 import ru.kpfu.itis.tmdb.databinding.FragmentDetailsBinding
-import ru.kpfu.itis.tmdb.presentation.ViewModelFactory
-import ru.kpfu.itis.tmdb.presentation.details.movie.DetailsMovieViewModel
 import java.io.IOException
+import javax.inject.Inject
 
 class DetailsTvFragment  : Fragment() {
 
     private lateinit var binding: FragmentDetailsBinding
+
+    @Inject
     lateinit var viewModel: DetailsTvViewModel
 
     override fun onCreateView(
@@ -26,15 +26,19 @@ class DetailsTvFragment  : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container, false)
-        viewModel = ViewModelProvider(this, initFactory()).get(DetailsTvViewModel::class.java)
-        arguments?.let { DetailsTvFragmentArgs.fromBundle(it).itemId }?.let { viewModel.showDetails(it) }
-        initSubscribes()
         return binding.root
     }
 
-    private fun initFactory() = ViewModelFactory(
-            ApiFactory.tmdbService
-    )
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        (activity?.application as App).appComponent.detailsTvComponentFactory()
+            .create(this)
+            .inject(this)
+
+        arguments?.let { DetailsTvFragmentArgs.fromBundle(it).itemId }?.let { viewModel.showDetails(it) }
+        initSubscribes()
+    }
 
     private fun initSubscribes() {
         with(viewModel) {

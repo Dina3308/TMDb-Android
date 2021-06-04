@@ -6,32 +6,41 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.*
+import ru.kpfu.itis.tmdb.App
 import ru.kpfu.itis.tmdb.R
-import ru.kpfu.itis.tmdb.data.api.ApiFactory
 import ru.kpfu.itis.tmdb.databinding.FragmentSearchBinding
-import ru.kpfu.itis.tmdb.presentation.ViewModelFactory
 import ru.kpfu.itis.tmdb.presentation.rv.search.SearchAdapter
 import java.io.IOException
+import javax.inject.Inject
 
 class SearchFragment : Fragment() {
 
     private lateinit var binding: FragmentSearchBinding
-    private lateinit var viewModel: SearchViewModel
+
+    @Inject
+    lateinit var viewModel: SearchViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false)
-        viewModel = ViewModelProvider(this, initFactory()).get(SearchViewModel::class.java)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        (activity?.application as App).appComponent.searchComponentFactory()
+            .create(this)
+            .inject(this)
+
         binding.myToolbar.inflateMenu(R.menu.nav_menu)
         initSearchView()
         initSubscribes()
-        return binding.root
     }
 
     private fun initSearchView(){
@@ -83,10 +92,6 @@ class SearchFragment : Fragment() {
             })
         }
     }
-
-    private fun initFactory() = ViewModelFactory(
-            ApiFactory.tmdbService
-    )
 
     private fun navigateToDetailsFragment(id: Int, type: String){
         SearchFragmentDirections.actionSearchFragmentToDetailsMultiFragment(id, type).also {

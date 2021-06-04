@@ -63,10 +63,6 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0'
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.0"
 
-    implementation "androidx.room:room-runtime:2.2.6"
-    implementation "androidx.room:room-ktx:2.2.6"
-    kapt "androidx.room:room-compiler:2.2.6"
-
     implementation "com.squareup.retrofit2:retrofit:${retrofit}"
     implementation "com.squareup.retrofit2:converter-gson:${retrofit}"
 
@@ -78,5 +74,8 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
     implementation "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
+
+    implementation "com.google.dagger:dagger:2.27"
+    kapt "com.google.dagger:dagger-compiler:2.27"
 
 }

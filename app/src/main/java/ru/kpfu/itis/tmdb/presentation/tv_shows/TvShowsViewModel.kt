@@ -8,8 +8,9 @@ import kotlinx.coroutines.launch
 import ru.kpfu.itis.tmdb.data.api.TmdbService
 import ru.kpfu.itis.tmdb.data.api.response.Results
 import java.io.IOException
+import javax.inject.Inject
 
-class TvShowsViewModel(
+class TvShowsViewModel @Inject constructor(
     private val tmdbService: TmdbService
 ) : ViewModel(){
 
